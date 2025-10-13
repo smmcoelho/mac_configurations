@@ -1,0 +1,10 @@
+#!/bin/bash
+source ~/bin/myEcho
+
+_port="80"
+
+_cmd="sudo python3 -m http.server ${_port}"
+
+eblue "${_cmd}"
+
+eval ${_cmd}

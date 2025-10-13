@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/sergio/.vim/colors'
+let g:netrw_dirhist_3='/home/sergio/.vim/syntax'
+let g:netrw_dirhist_2='/home/sergio/.vim/colors'
+let g:netrw_dirhist_1='/home/sergio/.vim/syntax'
+let g:netrw_dirhist_0='/home/sergio/dotfiles'
+let g:netrw_dirhist_9='/home/sergio/Downloads/vdi-main'
+let g:netrw_dirhist_8='/home/sergio/.vim/syntax'
+let g:netrw_dirhist_7='/home/sergio/.vim/view'
+let g:netrw_dirhist_6='/home/sergio/vim'
+let g:netrw_dirhist_5='/home/sergio/Downloads/vdi-main/vim'

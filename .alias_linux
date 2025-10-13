@@ -1,0 +1,56 @@
+#!/bin/bash
+echo "loading .alias_linux"
+
+alias download='cd ~/Downloads/'
+alias docs='cd ~/Documents/'
+
+###########
+## alias ##
+###########
+export GREP_COLORS='ms=01;46'
+
+alias ls='ls --color'
+alias ll='ls -l'
+alias diff='diff --color'
+alias grep='grep -i --color'
+alias vf='cd'
+alias xs='cd'
+alias gep='grep'
+alias gerp='grep'
+alias grpe='grep'
+alias grep='grep -ri'
+alias ld='ls'
+alias la='ls -a'
+alias cp='cp -vi'
+alias mv='mv -vi'
+alias grep='grep --color'
+alias zgrep='zgrep --color'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias lr='ls -lrth'
+alias ldu='du -h --max-depth=1 | sort -hr | head -20'
+alias d='rm -rf'
+alias lf='ls -lth'
+alias duOrder='find . -type f  -exec du -h {} + | sort -hr | head -n 10'
+alias vd='vimdiff'
+alias less='less -rig'
+alias week='date +%V'
+alias find_all_extensions="find . -type f -name '*.*' | sed 's|.*\.||' | sort | uniq"
+alias vim_last='vim `ls -prt | tail -1`'
+alias tailc_last='tailc `ls -prt | tail -1`'
+alias get_ip_add='hostname -I'
+
+#################
+## alias tools ##
+#################
+alias n='notify-send ${1}'
+
+#####################
+## alias locations ##
+#####################
+alias bin='cd ~/bin'
+alias usefull='cd ~/usefull'
+alias trash='cd ~/trash'
+alias openBashConfigFile='vim ~/.bashrc'
+alias sz='source ~/.bashrc'
+

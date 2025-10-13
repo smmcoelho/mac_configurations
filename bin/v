@@ -1,0 +1,54 @@
+#!/bin/bash
+
+
+### DESCRIPTION ###
+#
+# 
+#
+
+# to get echo colors
+. /home/smotacoe/bin/myEcho
+
+
+# Question to ask when script starts
+_question="Is this the script folder destination? [y/N]"
+
+# Usage 
+_usage()
+{
+    ered "Usage: ${0} <file(s)>"
+    exit 0
+}
+
+
+# if no file passed
+if [ $# -eq 0 ] ; then
+    _usage
+fi
+
+_files=""
+while [ "$*" != "" ]
+do
+    _file=`echo ${1} | cut -d ':' -f 1 | cut -d ',' -f 1 | sed "s/[0-9][0-9]~//g"`
+    _line=`echo ${1} | cut -d ':' -f 2 | cut -d ',' -f 1`
+
+    #if _line not a number set it as empty
+    re='^[0-9]+$'
+    if ! [[ $_line =~ $re ]] ; then
+        _line=""
+    fi
+    #ecyan $1
+    #ered $_file
+    _files="${_files} ${_file}"
+    shift
+done
+
+
+#ecyan "vim ${_files} +${_line}"
+if [ ! -z $_line ]; then
+    vim ${_files} +${_line}
+else
+    vim ${_files}
+fi
+
+

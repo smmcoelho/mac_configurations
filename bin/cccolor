@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# to get echo colors
+. ~/bin/myEcho
+
+putColor()
+{
+	red=$(tput bold; tput setaf 1)            
+	green=$(tput setaf 2)                    
+	yellow=$(tput setaf 3)         
+	fawn=$(tput setaf 3)
+	blue=$(tput setaf 4)           
+	purple=$(tput setaf 5)
+	pink=$(tput setaf 5)           
+	cyan=$(tput setaf 6)                                
+	white=$(tput setaf 7)          
+	gray=$(tput setaf 11)
+	normal=$(tput sgr0)                      
+
+	sep=`echo -e '\001'` # use \001 as a separator instead of '/'
+
+	while [ -n "$1" ] ; do
+	  color=${!1}
+	  pattern="$2"
+	  shift 2
+
+	  rules="$rules;s$sep\($pattern\)$sep$color\1$normal${sep}g"
+	done
+
+	#stdbuf -o0 -i0 sed -u -e "$rules"
+	sed -u -e "$rules"
+
+}
+
+#set counter to zero to show time of run
+#SECONDS=0
+
+#configuration of strings and regexp
+#putColor green "^[0-9].*@" cyan "^\[.*" pink "WARNING.*" pink "Warning.*" red ".*ERROR.*" red ".*Error.*" red ".*error.*" red "NOK" red "KO" red "FAILED.*" green "OK" green "PASSED" green "Finished" purple "#scoelho.*" blue "===" green ".*passed.*"
+putColor green ".*passed" red ".*failed" red ".*aborted" yellow ".*skipped"
+
+#print the runtime of the script
+#eyellow "Run time: $SECONDS s - $(($SECONDS / 60)) min - $(($SECONDS / 3600 )) h"
+
+#notify-send Process "Done !!!"

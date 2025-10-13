@@ -1,0 +1,115 @@
+#!/bin/bash
+echo "loading .alias_tv_iot"
+
+alias log_tv='cd /var/log/teamviewer-iot-agent/'
+
+alias install_deb='sudo dpkg -i '
+
+alias iot_vimconf='sudo vim /var/lib/teamviewer-iot-agent/global.conf'
+
+alias iot_set_port='sudo teamviewer-iot-agent configure set AppControlPort '
+alias iot_restart='sudo teamviewer-iot-agent restart'
+
+
+
+alias set_vscode='${CODE_PATH}/teamviewer/OS_Linux/bootstrap CLIENT_IOT debug amd64'
+alias run_cmake_tv='cd ${CODE_PATH}/teamviewer/BuildTarget/CLIENT_IOT.Debug.amd64 && cmake --build . --target all'
+
+CODE_PATH="/devel/source"
+MASTER_PATH="${CODE_PATH}/master"
+
+alias master='cd ${MASTER_PATH}'
+alias build_master_folder='cd ${CODE_PATH}/teamviewer/BuildTarget/'
+
+provider() {
+	_path="."
+	if [ -z "$1" ] ; then
+		_path="${MASTER_PATH}/Provider/"
+	elif [ "$1" == "rs" ] || [ "$1" == "-rs" ] ; then
+		_path="${MASTER_PATH}/Provider/RemoteScriptingProvider"
+	elif [ "$1" == "rst" ] || [ "$1" == "-rst" ] ; then
+		_path="${MASTER_PATH}/Provider/RemoteScriptingTest"
+	elif [ "$1" == "sp" ] || [ "$1" == "-sp" ] ; then
+		_path="${MASTER_PATH}/Provider/ScriptingPolicyProvider"
+	elif [ "$1" == "spt" ] || [ "$1" == "-spt" ] ; then
+		_path="${MASTER_PATH}/Provider/ScriptingPolicyTest"
+	else
+		ered "parameter not supported"
+		return
+	fi
+
+	cd $_path
+}
+
+serverapi() {
+	_path="."
+	if [ -z "$1" ] ; then
+		_path="${CODE_PATH}/serverapi"
+	elif [ "$1" == "rs" ] || [ "$1" == "-rs" ] ; then
+		_path="${CODE_PATH}/serverapi/Source/Provider/RemoteScripting/RemoteScriptingCommandDefinitions"
+	else
+		ered "parameter not supported"
+		return
+	fi
+
+	cd $_path
+}
+alias api='serverapi'
+
+tm_deply_folder() {
+	if [ -z "$1" ] ; then
+		cd "//master-testenv/C/TeamViewer/Provider"
+	elif [ "$1" == "rs" ] || [ "$1" == "-rs" ] ; then
+		cd "//master-testenv/C/TeamViewer/Provider/RemoteScripting"
+	else
+		ered "path not supported"
+	fi
+}
+
+build_version_folder() {
+	if [ -z "$1" ] ; then
+		cd "//tvres.org/Storage/Builds/Server/Provider/main"
+	elif [ "$1" == "rs" ] || [ "$1" == "-rs" ] ; then
+		cd "//master-testenv/C/TeamViewer/Provider/RemoteScripting"
+	else
+		ered "path not supported"
+	fi
+}
+
+tm_log_tail() {
+	_path="//master-testenv/C/TeamViewer/Provider/RemoteScripting/Logs/"
+	_file=""`ls -rt ${_path} | tail -1`
+	if [ "$1" == "re" ] ; then
+		_path="//master-testenv/C/TeamViewer/Provider/RuleEngine/Logs/"
+		_file=`ls -rt ${_path} | tail -1`
+	elif [ "$1" == "rs" ] || [ "$1" == "-rs" ] ; then
+		_path="//master-testenv/C/TeamViewer/Provider/RemoteScripting/Logs/"
+		_file=`ls -rt ${_path} | tail -1`
+	elif [ "$1" == "mo" ] || [ "$1" == "-mo" ] ; then
+		_path="//master-testenv/C/TeamViewer/Provider/Monitoring/Logs/"
+		_file=`ls -rt ${_path} | tail -1`
+	else
+		ered "path not supported"
+		#return
+	fi
+
+	tailc ${_path}${_file}
+}
+
+
+teamviewer() {
+	_path="${CODE_PATH}/teamviewer"
+
+	if [ $# -gt 0 ] ; then
+		if [ $1 == "remotescripting" ] || [ $1 == "RemoteScripting" ] || [ $1 == "rs" ] || [ "$1" == "-rs" ] ; then
+			_path="${CODE_PATH}/teamviewer/Source/Core/RemoteScripting"
+		elif [ $1 == "Core" ] || [ $1 == "core" ] || [ $1 == "c" ] ; then
+			_path="${CODE_PATH}/teamviewer/Source/Core"
+		fi
+	fi
+
+	cd $_path
+}
+alias tv='teamviewer'
+
+

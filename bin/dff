@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# title      : lff
+#
+# description: _DESCRIPTION
+#
+# date       : 14/07/2017
+#
+# version    : 0.1 - beta
+# autor      : sergio coelho
+#==============================================================================
+
+
+# to get echo colors
+. ~/bin/myEcho
+
+_str=""
+while [ "$*" != "" ]
+do
+    if [ -z "${_str}" ] ; then
+        _str="-name ${1} "
+    else
+        _str="${_str} -o -name ${1} "
+    fi
+    shift
+done
+
+rm -rf `find . ${_str}`

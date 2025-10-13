@@ -1,0 +1,19 @@
+#!/bin/bash
+source ~/bin/myEcho
+
+_str=""
+while [ "$*" != "" ]
+do
+    case $1 in
+        * )
+            _str="${_str} ~/bin/${1} "
+            shift
+            ;;
+    esac
+done
+
+_cmd="vim ${_str}"
+
+eblue "${_cmd}"
+
+eval ${_cmd}

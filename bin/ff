@@ -1,0 +1,112 @@
+#!/bin/bash
+#
+# title      : ff
+#
+# description: _DESCRIPTION
+#
+# date       : 14/07/2017
+#
+# version    : 0.1 - beta
+# autor      : sergio coelho
+#==============================================================================
+
+
+# to get echo colors
+. ~/bin/myEcho
+
+# to get USER_PATH and CODE_PATH
+. ~/bin/user_definitions
+
+
+#CODE_PATH="/c/Users/INT100239/source"
+
+_debug='false'
+
+# Usage 
+_usage()
+{
+    ered "Usage: ${0} (optional) <files name> || -f <file type> || -s <file startin by> || -p <pattern>"
+    exit 0
+}
+_path="."
+_filter="| grep -v '~$'"
+
+if [ $# -eq 0 ] ; then
+    #ered "Usage - $0 FILE_NAME"
+    #exit
+    find .
+else
+    _str=""
+    while [ "$*" != "" ]
+    do
+        case $1 in
+            --nofilt )
+                _filter=""
+                shift 
+                ;;
+			-rs )
+                _path="${CODE_PATH}/master/Provider/RemoteScriptingProvider ${CODE_PATH}/master/Provider/RemoteScriptingService ${CODE_PATH}/master/Provider/RemoteScriptingTest" 
+                shift 
+                ;;
+            -f )
+                shift
+                if [ -z "${_str}" ] ; then
+                    _str="-iname \*${1} "
+                else # for find more than one file
+                    _str="${_str} -o -iname \*${1} "
+                fi
+                shift
+                ;;
+            -s)
+                shift
+                if [ -z "${_str}" ] ; then
+                    _str="-iname ${1}\* "
+                else # for find more than one file
+                    _str="${_str} -o -iname ${1}\* "
+                fi
+                shift
+                ;;
+            -p )
+                shift
+                if [ -z "${_str}" ] ; then
+                    _str="-iname \*${1}\* "
+                else # for find more than one file
+                    _str="${_str} -o -iname \*${1}\* "
+                fi
+                shift
+                ;;
+            -n )
+                shift
+                if [ -z "${_str}" ] ; then
+                    _str="-iname ${1} "
+                else # for find more than one file
+                    _str="${_str} -o -iname \*${1}\* "
+                fi
+                shift
+                ;;
+            -d )
+                _debug='true'
+                shift
+                ;;
+            -h )
+                _usage
+                ;;
+            * )
+                #_usage
+                if [ -z "${_str}" ] ; then
+                    _str="-iname ${1} "
+                else # for find more than one file
+                    _str="${_str} -o -iname \*${1}\* "
+                fi
+                shift
+                ;;
+        esac
+    done
+
+    edebug ${_str}
+    _cmd="find ${_path} ${_str} ${_filter}"
+
+    edebug ${_cmd}
+    eval ${_cmd}
+fi
+

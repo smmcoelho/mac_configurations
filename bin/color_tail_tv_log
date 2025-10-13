@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# to get echo colors
+. ~/bin/myEcho
+
+putColor()
+{
+	h=$(tput setaf 3; tput bold; tput rev)
+	red=$(tput bold; tput setaf 1)
+	green=$(tput setaf 2)
+	yellow=$(tput setaf 3)
+	fawn=$(tput setaf 3)
+	blue=$(tput setaf 4)
+	purple=$(tput setaf 5)
+	pink=$(tput setaf 5)
+	cyan=$(tput setaf 6)
+	white=$(tput setaf 7)
+
+	gray_dark=$(tput setaf 246)
+	gray_light=$(tput setaf 249)
+	red_s=$(tput bold; tput setaf 196)
+	orange_s=$(tput bold; tput setaf 208)
+	yellow_s=$(tput bold; tput setaf 226)
+	green_dark=$(tput bold; tput setaf 034)
+	green_medium=$(tput bold; tput setaf 100)
+	green_light=$(tput bold; tput setaf 148)
+	normal=$(tput sgr0)
+
+	sep=`echo -e '\001'` # use \001 as a separator instead of '/'
+
+	while [ -n "$1" ] ; do
+	  color=${!1}
+	  pattern="$2"
+	  shift 2
+
+	  rules="$rules;s$sep\($pattern\)$sep$color\1$normal${sep}g"
+	done
+
+	#stdbuf -o0 -i0 sed -u -e "$rules"
+	sed -u -e "$rules"
+
+}
+
+putColor yellow_s "!.*" orange_s "!!.*" red_s "!!!.*" gray_light "+.*" gray_dark "++.*" cyan " [A-Z] " green_dark "[0-9][0-9][0-9][0-9]/[0-9][0-9]/[0-9][0-9]" green_medium "[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]" green_dark "[0-9][0-9][0-9][0-9][0-9] [0-9][0-9][0-9][0-9][0-9]" green_dark "[0-9][0-9][0-9][0-9][0-9]  [0-9][0-9][0-9][0-9]" h "OneE.*" h "1E.*"
+

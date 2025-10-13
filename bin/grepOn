@@ -1,0 +1,160 @@
+#!/bin/bash
+
+### DESCRIPTION ###
+#
+# 
+#
+
+# to get echo colors
+. ~/bin/myEcho
+
+# to get USER_PATH and CODE_PATH
+. ~/bin/user_definitions
+
+
+# Usage 
+_Usage()
+{
+    ered "Usage: ${0} -p <pattern> <-all/-kilmex/-kiex/gnkiex/./-script/-l/-f/-o/-header/-source/-tst> (optional) --path <path_to_project_folder>"
+    exit 0
+}
+
+# seach folders
+#CODE_PATH="/c/Users/INT100239/source" # "/boa_prd/smotacoe/nxt2050_lsu_new_2"
+
+
+# include moved to -code option 
+#_INCLUDE_FILES="--include={\*.cpp,\*.h,\*.hpp,\*.c,\*.txt,\*.xml,\*.sql,\*.m,\*.json,\*d,\*.mk,\*.py,\*.ddf,}"
+
+# exclude
+_EXCLUDE_FOLDER='\*.git,\*.caddir'
+_EXCLUDE_FILES='\*.gitignore,\*.project,\*.html,tags,\*.bin,\*.tgz,\*.gz,\*.vpi'
+
+_FOLDER=""
+_PATTERN=""
+_LISTFILES=""
+
+if [ $# -gt 1 ] ; then
+    while [ "$*" != "" ]
+    do
+        case $1 in
+            -all )
+                _INCLUDE_FILES="--include={\*.cpp,\*.h,\*.hpp,\*.c,\*.txt,\*.xml,\*.sql,\*.m,\*.json,\*d,\*.mk,\*.py,\*.ddf,}"
+                _FOLDER=${CODE_PATH}
+                shift
+                ;;
+            -wps )
+               _INCLUDE_FILES="--include={\*.cs,\*.cscfg,\*.csdef,\*MakeList\*,}"
+               _FOLDER="${CODE_PATH}/webplatformservices/WebPlatformService"
+               ered "${_FOLDER}"
+               shift
+               ;;
+            --path )
+                shift 
+                CODE_PATH=${1}
+                if [ -z "${_FOLDER}" ] ; then
+                    _FOLDER=${CODE_PATH}
+                    echo "if"
+                else
+                    _FOLDER=`echo ${_FOLDER} | sed "s:${_FOLDER}:${CODE_PATH}:g"`
+                fi
+                shift 
+                ;;
+            . )
+                _FOLDER=${PWD}
+                shift
+                ;;
+            -l )
+                _LISTFILES="YES"
+                shift
+                ;;
+            -o )
+                _LISTFILES="YES"
+                _OPENFILES="YES"
+                shift
+                ;;
+            -e )
+               shift
+               _EXCLUDE_FOLDER=${1}
+               shift
+               ;;
+            -v )
+                _VIM="YES"
+                shift
+                ;;
+            -c++ )
+                _INCLUDE_FILES="--include={\*.h,\*hpp,\*.c,\*cpp,\*ddf,}"
+                _EXCLUDE_FILES="${_EXCLUDE_FILES},\*test\*,\*gmok\*,\*Mock\*,"
+                _EXCLUDE_FOLDER="${_EXCLUDE_FOLDER},tst,bld\*"
+                shift
+                ;;
+            -tst )
+                _INCLUDE_FILES="--include={\*.h,\*hpp,\*.c,\*cpp,\*ddf,}"
+                _EXCLUDE_FILES="${_EXCLUDE_FILES},\*test\*,\*gmok\*,\*Mock\*,"
+                shift
+                ;;
+            -make )
+                _INCLUDE_FILES="--include={\*MakeList\*,}"
+                shift
+                ;;
+            -header )
+                _INCLUDE_FILES="--include={\*.h,\*hpp,}"
+                shift
+                ;;
+            -source )
+                _INCLUDE_FILES="--include={\*.c,\*cpp,}"
+                shift
+                ;;
+            -f )
+                shift
+                _FILTER=`echo $1 | sed "s/,/,_*./g" | tr '_' '\' 2>/dev/null`
+                _INCLUDE_FILES="--include={\*.${_FILTER},}"
+                ered $_ic
+                shift
+                ;;
+            -h )
+                ered "usage 1"
+                _Usage
+                return
+                ;;
+            -p ) 
+                shift
+                #_PATTERN=${1} 
+                _PATTERN=`echo ${1} | cut -d ':' -f 1 | cut -d ',' -f 1 | sed "s/[0-9][0-9]~//g"`
+                shift
+                ;;
+            * )
+                eorange "parameter not reconized"
+                shift 
+                ;;
+        esac
+    done
+else
+    ered "usage 2"
+    _Usage
+fi
+
+#egreen ${_INCLUDE_FILES}
+
+if [ "${_VIM}" == "YES" ] ; then
+    _F=`grep ${_INCLUDE_FILES} --exclude-dir={${_EXCLUDE_FOLDER}} --exclude={${_EXCLUDE_FILES}} -ri -l ${_PATTERN} ${_FOLDER}`
+    eblue "${_F}"
+    exit 0
+
+elif [ "${_LISTFILES}" == "YES" ] ; then
+    if [ "${_OPENFILES}" != "YES" ]; then
+        eblue "grep ${_INCLUDE_FILES} --exclude-dir={${_EXCLUDE_FOLDER}} --exclude={${_EXCLUDE_FILES}} --color -ri -l ${_PATTERN} ${_FOLDER}"
+    fi
+        _EXEC="grep ${_INCLUDE_FILES} --exclude-dir={${_EXCLUDE_FOLDER}} --exclude={${_EXCLUDE_FILES}} --color -ri -l ${_PATTERN} ${_FOLDER}"
+else
+    eblue "grep ${_INCLUDE_FILES} --exclude-dir={${_EXCLUDE_FOLDER}}  --exclude={${_EXCLUDE_FILES}} --color -r -in ${_PATTERN} ${_FOLDER}"
+    _EXEC="grep ${_INCLUDE_FILES} --exclude-dir={${_EXCLUDE_FOLDER}}  --exclude={${_EXCLUDE_FILES}} --color -r -in ${_PATTERN} ${_FOLDER}"
+fi
+
+
+#ered ${_EXEC}
+eval ${_EXEC}
+
+
+
+

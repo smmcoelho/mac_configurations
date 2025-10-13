@@ -1,0 +1,15 @@
+#!/bin/bash
+. ~/bin/myEcho
+
+file=""
+
+if [ -n "$1" ]; then
+	file="$1"
+else
+	file=`ls -rt | tail -1`
+fi
+
+_cmd="tail -f \"$file\" | color_tail_tv_log"
+
+eblue $_cmd
+eval $_cmd

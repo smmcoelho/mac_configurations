@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# to get USER_PATH and CODE_PATH
+. ~/bin/user_definitions
+
+source ${USER_PATH}/bin/myEcho
+
+_usage(){
+    ered "Usage $0 --package|-p <package_name>"
+    exit
+}
+
+_conan_update="./Conan/Win/update_lockfile.py"
+
+_is_master=`echo ${_pwd} | grep -i master`
+if [ -z "$_is_master" ]; then
+	_conan_update="./conan/update_lockfile.py"
+fi
+
+
+if [ ! -f ${_conan_update} ] ; then
+	ered "${_conan_update} not present"
+	ered "switch to different folder"
+	exit
+fi
+
+if [ $# -gt 0 ] ; then
+while [ "$*" != "" ]
+do
+	case $1 in
+		--package | -p )
+			shift
+			#parse format Eg. mexample-definitions/1.45.0@jenkins/stable
+			_cmd="${_conan_update} --build=$1"
+			shift
+			;;
+		-h )
+			_usage
+			;;
+		* )
+			ered "command not found"
+			_usage
+			exit
+			;;
+	esac
+done
+else
+	_cmd="${_conan_update}"
+fi
+
+eblue $_cmd
+#eval $_cmd
