@@ -1,16 +1,8 @@
 # .bash_profile
 echo "loading .bash_profile"
 
+source  .alias_mac
 #in terminal -> preferences -> command (complete path): => /bin/bash
-
-# source vimrc
-alias sz='. ~/.bash_profile'
-alias ..='cd ..'
-alias d='rm -rf'
-alias lr='ls -lrth'
-alias la='ls -la'
-
-alias pdflatex=/Library/Tex/texbin/pdflatex
 
 ##colors
 COLOR_NORM='\033[0m'
@@ -47,38 +39,6 @@ colorIt()
 # Ignore case while completing
 bind 'set completion-ignore-case on'
 
-#force colourful grep output
-alias cp='cp -vi'
-alias mv='mv -vi'
-alias grep='grep --color'
-alias zgrep='zgrep --color'
-alias tree='tree -Csu'
-#print the number of files in the current directory
-alias noFiles=' echo "Number of Files: " && ls -1R | wc -l '
-
-
-alias ll='ls -lrtsh'
-#list just files
-alias lf="ls -l | egrep -v '^d'"
-#list just directories
-alias ldir="ls -l | egrep '^d'"
-#colorize ls
-alias ls="ls -G"
-#ls by date
-alias lr="ls -lrth"
-alias c++='cd /usr/local/Cellar/gcc/4.9.2_1/include/c++'
-
-alias proj='cd /Users/sergiocoelho/Documents/project'
-alias docs='cd /Users/sergiocoelho/Documents'
-alias down='cd /Users/sergiocoelho/Downloads'
-alias usefull='cd /Users/sergiocoelho/usefull'
-
-alias openMain='vim `find . -name main.cpp`'
-alias openProject='vim `find . -name \*.cpp -o -name \*.h`'
-
-alias ssh_lsa='ssh scoelho@lsa.isep.ipp.pt'
-alias ssh_mapscape='ssh sergio.coelho@login.mapscape.nl -p 10056'
-
 ###############
 ## functions ##
 ###############
@@ -114,31 +74,31 @@ function extract()      # Handy Extract Program.
 {
 	if [ -f $1 ] ; then
 		case $1 in
-			*.tar.bz2)   
-				tar xvjf $1     
+			*.tar.bz2)
+				tar xvjf $1
 				;;
 			*.tar.gz)
-				tar xvzf $1     
-				;;                                 
-			*.bz2)    
-				bunzip2 $1     
+				tar xvzf $1
 				;;
-                                 
-			*.rar)       
-				unrar x $1      
+			*.bz2)
+				bunzip2 $1
 				;;
-			*.gz)       
-				gunzip $1    
+
+			*.rar)
+				unrar x $1
 				;;
-			*.tar)      
-				tar xvf $1     
-				;;                                
+			*.gz)
+				gunzip $1
+				;;
+			*.tar)
+				tar xvf $1
+				;;
 			*.tbz2)
 				tar xvjf $1
 				;;
 			*.tgz)
 				tar xvzf $1
-				;;                                   
+				;;
 			*.zip)
 				unzip $1
 				;;
@@ -153,7 +113,7 @@ function extract()      # Handy Extract Program.
 				;;
 		esac
 	else
-		echo "'$1' is not a valid file" 
+		echo "'$1' is not a valid file"
 
 	fi
 }
@@ -193,8 +153,8 @@ baseName=`basename $1`
 	else
 		if [ -d	$1 ] ; then
 			echo "It was a Directory change directory to $dirName"
-			cd $dirName 
-			
+			cd $dirName
+
 			case $2 in
 				tar.bz2)
 					tar cjf $baseName.tar.bz2 $baseName
@@ -203,7 +163,7 @@ baseName=`basename $1`
 					tar czf $baseName.tar.gz $baseName
 					;;
 				gz)
-					gzip -r $baseName 
+					gzip -r $baseName
 					;;
 				tar)
 					tar -cvvf $baseName.tar $baseName
