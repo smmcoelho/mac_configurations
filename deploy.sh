@@ -19,13 +19,13 @@ CopyAllFiles()
    ## copy folders
    for i in "${_folders[@]}"
    do
-      cp --verbose -rf $i ${USER_PATH}
+      cp -rf $i ${USER_PATH}
    done
 
    ## copy files
    for i in "${_files[@]}"
    do
-      cp --verbose $i ${USER_PATH}
+      cp $i ${USER_PATH}
    done
 }
 
@@ -36,7 +36,7 @@ files=""
 if [ $# -gt 0 ] ; then
     _files="$@"
     echo "copy $_files"
-    cp --verbose --parents $_files ${USER_PATH}
+    cp --parents $_files ${USER_PATH}
 else
    CopyAllFiles
    echo "copy all"

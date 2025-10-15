@@ -1,0 +1,49 @@
+[color]
+    status = auto
+    interactive = always
+[color "status"]
+	added = green normal ;bold
+	changed = yellow normal ;bold
+	untracked = cyan normal ;bold
+      deleted = red
+	header = white normal ;bold
+	updated = green normal ;bold
+	branch = magenta normal ;bold
+	nobranch = normal normal ;bold
+	unmerged = red normal ;bold
+[color "interactive"]
+    error = red bold
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[alias]
+    st = status
+    ci = commit -a
+    undoci = reset --soft HEAD^
+    cia = git commit --amend
+    co = checkout
+    out = log @{u}.. --decorate --name-status
+    rollback = reset --soft HEAD~1
+    in = whatchanged ..origin
+    up = pull
+    vimdiff = difftool
+    gr = log  --graph --full-history --all --color --pretty=tformat:%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m
+    llog = log  --graph --full-history --all --color --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --name-status --date=short
+    log = log --name-only --color
+    mylog = log --pretty='format:%C(magenta)Commit: %H%n%C(yellow)Author: %an%n%C(cyan bold)Date: %ai (%ar)%n%C(cyan)Comment: %fs%nFiles%Creset:' --name-status
+    fulldiff = for rev in $(git rev-list <committish>.. ) ; do  git difftool ${rev} ${rev}~1; done
+    luser = log --author
+    upreset = reset --hard
+    checkoutall = reset --hard
+    url = config --get remote.origin.url
+    llsubmodule = submodule foreach --quiet 'echo $name'
+    pullreset = !git fetch --all && git reset --hard origin/`git branch --show-current`
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = Meld
+[submodule]
+	recurse = true
