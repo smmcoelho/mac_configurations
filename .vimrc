@@ -9,7 +9,7 @@ highlight CursorLineNr cterm=NONE ctermbg=darkgrey
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=darkgrey " set cursorline color
 
-"set modeline 
+"set modeline
 syntax on
 filetype plugin indent on
 set noerrorbells visualbell t_vb= " disable bell
@@ -65,7 +65,7 @@ let g:airline#extensions#tabline#buffer_nr_format = '%s)'
 
 let g:airline#extensions#tagbar#enabled = 1
 
-"let g:airline_section_b = ['hunks', branch'] 
+"let g:airline_section_b = ['hunks', branch']
 let g:airline_section_b = '%{getcwd()}'
 
 " themes for airline - https://github.com/vim-airline/vim-airline-themes
@@ -74,9 +74,9 @@ let g:airline_theme='murmur'
 
 ""NERD Commenter - https://github.com/preservim/nerdcommenter
 filetype plugin on
-vmap \\ \ci 
+vmap \\ \ci
 map \\ \ci
-vmap \] \cn 
+vmap \] \cn
 map \] \cn
 map \= \cc
 vmap\= \cc
@@ -112,18 +112,18 @@ nmap qa :qa!<CR>
 nmap wq :wq<CR>
 
 " type ` to show buffer list
-:nnoremap ` :buffers<CR>:buffer<Space>
-:nnoremap `1 :b1<CR>
-:nnoremap `2 :b2<CR>
-:nnoremap `3 :b3<CR>
-:nnoremap `4 :b4<CR>
-:nnoremap `5 :b5<CR>
-:nnoremap `6 :b6<CR>
-:nnoremap `7 :b7<CR>
-:nnoremap `8 :b8<CR>
-:nnoremap `9 :b9<CR>
+:nnoremap § :buffers<CR>:buffer<Space>
+:nnoremap §1 :b1<CR>
+:nnoremap §2 :b2<CR>
+:nnoremap §3 :b3<CR>
+:nnoremap §4 :b4<CR>
+:nnoremap §5 :b5<CR>
+:nnoremap §6 :b6<CR>
+:nnoremap §7 :b7<CR>
+:nnoremap §8 :b8<CR>
+:nnoremap §9 :b9<CR>
 
-:nnoremap c` :bd<CR>
+:nnoremap c§ :bd<CR>
 :nnoremap c1 :bd1<CR>
 :nnoremap c2 :bd2<CR>
 :nnoremap c3 :bd3<CR>
@@ -135,7 +135,7 @@ nmap wq :wq<CR>
 :nnoremap c9 :bd9<CR>
 
 :nnoremap ! :bnext<CR>
-:nnoremap ~ :bprevious<CR>
+:nnoremap ± :bprevious<CR>
 
 " set pl to past into next line
 :nmap pl :pu<CR>
@@ -149,9 +149,9 @@ map \g zo<CR>
 map \n :enew<CR>
 
 "to move one word forward or backward
-map <C-Left> b 
+map <C-Left> b
 map <A-Left> b
-map <C-Right> w 
+map <C-Right> w
 map <A-Right> w
 
 "map <C-M> <C-]>
