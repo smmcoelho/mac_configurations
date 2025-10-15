@@ -47,3 +47,6 @@
 	tool = Meld
 [submodule]
 	recurse = true
+[user]
+	name = Sergio Coelho
+	email = sergiocoelho.trp@gmail.com
